@@ -18,7 +18,5 @@
     "url": "https://github.com/ThomasSSwanson/movie_api/issues"
   },
   "homepage": "https://github.com/ThomasSSwanson/movie_api#readme",
-  "dependencies": {
-    "lodash": "^4.17.20"
-  }
+  "dependencies": {}
 }
