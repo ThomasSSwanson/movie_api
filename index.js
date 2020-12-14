@@ -98,6 +98,10 @@ app.post('/users/:username/movies/:title', (req, res) => {
   res.send('Successful POST request allowing user to add a movie to their favorites list');
 });
 
+app.delete('/users/:username/movies/:title', (req, res) => {
+  res.send('Successful POST request allowing user to remove a movie from their favorites list');
+});
+
 app.delete('/users/:username', (req, res) => {
   res.send('Successful DELETE request allowing user to deregister');
 });
