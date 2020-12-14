@@ -69,12 +69,37 @@ let topMovies = [
     }
   ];
 
-app.get('/', (req, res) => {
-    res.send('Index test text,  say that 10 times fast')
-});
 
 app.get('/movies', (req, res) => {
   res.json(topMovies);
+});
+
+app.get('/movies/:title', (req, res) => {
+  res.send('Successful GET request returning data on single movie');
+});
+
+app.get('/movies/genres/:title', (req, res) => {
+  res.send("Successful GET request returning data about a genre of a movie by it's title");
+});
+
+app.get('/movies/directors/:name', (req, res) => {
+  res.send('Successful GET request returning data about a director by name');
+});
+
+app.post('/users', (req, res) => {
+  res.send('Successful POST request allowing new user to register');
+});
+
+app.put('/users/:username', (req, res) => {
+  res.send('Successful PUT request allowing existing user to update their information');
+});
+
+app.post('/users/:username/movies/:title', (req, res) => {
+  res.send('Successful POST request allowing user to add a movie to their favorites list');
+});
+
+app.delete('/users/:username', (req, res) => {
+  res.send('Successful DELETE request allowing user to deregister');
 });
 
 // listen for requests

@@ -9,8 +9,176 @@
 
 <body>
     <h1>API documentation</h1>
-    <p>The API lets you search for movies. You can search by movie name, genre or director name.</p>
-
+    <p>The API lets you search for movies. You can search by movie name, "genre" or "director" name.</p>
+    <!-- remove inline styles later -->
+    <table style="width: 640px;">
+        <tr>
+            <th>Business Logic</th>
+            <th>URL Endpoint</th>
+            <th>HTTP Method</th>
+            <th>Request Body</th>
+            <th>Request Example</th>
+            <th>Response Body</th>
+            <th>Response Example</th>
+        </tr>
+        <tr>
+            <td>Get a list of all movies</td>
+            <td>/movies</td>
+            <td>GET</td>
+            <td>None</td>
+            <td>/movies</td>
+            <td>JSON</td>
+            <td>
+                {
+                title: "Day of the Dead",
+                "director": "George A. Romero",
+                "year": "1985",
+                "genre": "Horror",
+                "description": "Trapped in a missile silo, a small team of scientists, civilians and trigger-happy
+                soldiers battle desperately to ensure the survival of the human race, but tension inside the base is
+                reaching breaking-point, and the zombies are gathering outside.",
+                "imageURL": "/dayofthedead.jpg",
+                "featured": "Yes"
+                }, array of these movie objects
+            </td>
+        </tr>
+        <tr>
+            <td>Return data on a single movie</td>
+            <td>/movies/:title</td>
+            <td>GET</td>
+            <td>None</td>
+            <td>/movies/Day%20of%20the%20Dead</td>
+            <td>JSON</td>
+            <td>
+                {
+                "title": "Day of the Dead",
+                "director": "George A. Romero",
+                "year": "1985",
+                "genre": "Horror",
+                "description": "Trapped in a missile silo, a small team of scientists, civilians and trigger-happy
+                soldiers battle desperately to ensure the survival of the human race, but tension inside the base is
+                reaching breaking-point, and the zombies are gathering outside.",
+                "imageURL": "/dayofthedead.jpg",
+                "featured": "Yes"
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>Return data about genre of a movie by its title</td>
+            <td>/movies/genres/:title</td>
+            <td>GET</td>
+            <td>None</td>
+            <td>/movies/genres/Day%20of%20the%20Dead</td>
+            <td>JSON</td>
+            <td>
+                {
+                "genre": "Horror",
+                "description": "A horror film is one that seeks to elicit fear in its audience for entertainment
+                purposes. Horror films additionally aim to evoke viewers' nightmares, fears, revulsions and terror of
+                the unknown and macabre"
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>Return data about a director by name;</td>
+            <td>/movies/directors/:name</td>
+            <td>GET</td>
+            <td>None</td>
+            <td>/movies/directors/George%20A.%20Romero</td>
+            <td>JSON</td>
+            <td>
+                {
+                "name": "George A. Romero",
+                "bio": "George Andrew Romero was an American-Canadian filmmaker, writer, and editor. He is best known
+                for his Night of the Living Dead series of gruesome and satirical horror films about an imagined zombie
+                apocalypse, which began with the 1968 film of the same name.",
+                "birth year": "1940",
+                "death year": "2017"
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>Allow new users to register</td>
+            <td>/users</td>
+            <td>POST</td>
+            <td>JSON</td>
+            <td>
+                {
+                "username": "sakiproudfoot",
+                "password": "supersecretstuffhere",
+                "email": "sakiproudfoot@gmail.com"
+                }
+            </td>
+            <td>JSON</td>
+            <td>
+                {
+                "username": "sakiproudfoot",
+                "id": "qwer43532qwer4362"
+                "password": "supersecretstuffhere",
+                "email": "sakiproudfoot@gmail.com",
+                "favoriteMovies": "[]"
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>Allow users to update their information</td>
+            <td>/users/:username</td>
+            <td>PUT</td>
+            <td>JSON</td>
+            <td>
+                {
+                "username": "sakiproudfoot",
+                "password": "supersecretstuffhere",
+                "email": "sakiproudfoot@gmail.com"
+                }
+            </td>
+            <td>JSON</td>
+            <td>
+                {
+                "username": "sakiproudfoot",
+                "id": "qwer43532qwer4362"
+                "password": "supersecretstuffhere",
+                "email": "sakiproudfoot@gmail.com",
+                "favoriteMovies": "[]"
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>Allow users to add a movie to their favorites list</td>
+            <td>/users/:username/movies/:title</td>
+            <td>POST</td>
+            <td>None</td>
+            <td>/users/sakiproudfoot/movies/Day%20of%20the%20Dead</td>
+            <td>JSON</td>
+            <td>
+                {
+                "favoriteMovies": ["Day of the Dead"]
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>Allow users to remove a movie from their favorites list</td>
+            <td>/users/:username/movies/:title</td>
+            <td>DELETE</td>
+            <td>None</td>
+            <td>/users/sakiproudfoot/movies/Day%20of%20the%20Dead</td>
+            <td>JSON</td>
+            <td>
+                {
+                "favoriteMovies": []
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>Allow existing users to deregister</td>
+            <td>/users/:username</td>
+            <td>DELETE</td>
+            <td>None</td>
+            <td>/users/sakiproudfoot</td>
+            <td>text</td>
+            <td>"sakiproudfoot has been deregistered"</td>
+        </tr>
+    </table>
 
 </body>
 
