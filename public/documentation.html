@@ -29,17 +29,26 @@
             <td>/movies</td>
             <td>JSON</td>
             <td>
-                {
-                title: "Day of the Dead",
-                "director": "George A. Romero",
-                "year": "1985",
-                "genre": "Horror",
-                "description": "Trapped in a missile silo, a small team of scientists, civilians and trigger-happy
-                soldiers battle desperately to ensure the survival of the human race, but tension inside the base is
-                reaching breaking-point, and the zombies are gathering outside.",
-                "imageURL": "/dayofthedead.jpg",
-                "featured": "True"
-                }, array of these movie objects
+                [ {
+                "Genre": {
+                "Name": "Thriller",
+                "Description": "Thriller film, also known as suspense film or suspense thriller, is a broad film genre
+                that involves excitement and suspense in the audience."
+                },
+                "Director": {
+                "Name": "Jonathan Demme",
+                "Bio": "Robert Jonathan Demme was an American director, producer, and screenwriter.",
+                "Birth": "1944",
+                "Death": "2017"
+                },
+                "Actors": [],
+                "_id": "5ff2663614f8e589ab36f826",
+                "Title": "Silence of the Lambs",
+                "Description": "A young FBI cadet must receive the help of an incarcerated and manipulative cannibal
+                killer to help catch another serial killer.",
+                "ImagePath": "silenceofthelambs.png",
+                "Featured": true
+                }, array of these movie objects ]
             </td>
         </tr>
         <tr>
@@ -51,15 +60,26 @@
             <td>JSON</td>
             <td>
                 {
-                "title": "Day of the Dead",
-                "director": "George A. Romero",
-                "year": "1985",
-                "genre": "Horror",
-                "description": "Trapped in a missile silo, a small team of scientists, civilians and trigger-happy
+                "Genre": {
+                "Name": "Horror",
+                "Description": "A horror film is one that seeks to elicit fear in its audience for entertainment
+                purposes. Horror films additionally aim to evoke viewers' nightmares, fears, revulsions and terror of
+                the unknown and macabre"
+                },
+                "Director": {
+                "Name": "George A. Romero",
+                "Bio": "A legend in horror film. He was a pioneer of zombie films and other early horror movies.",
+                "Birth": "1940",
+                "Death": "2017"
+                },
+                "Actors": [],
+                "_id": "5ff62e7014f8e589ab36f82d",
+                "Title": "Day of the Dead",
+                "Description": "Trapped in a missile silo, a small team of scientists, civilians and trigger-happy
                 soldiers battle desperately to ensure the survival of the human race, but tension inside the base is
                 reaching breaking-point, and the zombies are gathering outside.",
-                "imageURL": "/dayofthedead.jpg",
-                "featured": "True"
+                "ImagePath": "dawnofthedead.png",
+                "Featured": true
                 }
             </td>
         </tr>
@@ -72,8 +92,8 @@
             <td>JSON</td>
             <td>
                 {
-                "genre": "Horror",
-                "description": "A horror film is one that seeks to elicit fear in its audience for entertainment
+                "Name": "Horror",
+                "Description": "A horror film is one that seeks to elicit fear in its audience for entertainment
                 purposes. Horror films additionally aim to evoke viewers' nightmares, fears, revulsions and terror of
                 the unknown and macabre"
                 }
@@ -88,12 +108,10 @@
             <td>JSON</td>
             <td>
                 {
-                "name": "George A. Romero",
-                "bio": "George Andrew Romero was an American-Canadian filmmaker, writer, and editor. He is best known
-                for his Night of the Living Dead series of gruesome and satirical horror films about an imagined zombie
-                apocalypse, which began with the 1968 film of the same name.",
-                "birth year": "1940",
-                "death year": "2017"
+                "Name": "George A. Romero",
+                "Bio": "A legend in horror film. He was a pioneer of zombie films and other early horror movies.",
+                "Birth": "1940",
+                "Death": "2017"
                 }
             </td>
         </tr>
@@ -112,11 +130,15 @@
             <td>JSON</td>
             <td>
                 {
-                "username": "sakiproudfoot",
-                "id": "qwer43532qwer4362"
-                "password": "supersecretstuffhere",
-                "email": "sakiproudfoot@gmail.com",
-                "favoriteMovies": "[]"
+                "_id" : ObjectId("5ff64a94d3e5442ec9710829"),
+                "username" : "sakiproudfoot",
+                "password" : "fakepassword",
+                "email" : "sakiproudfoot@gmail.com",
+                "birthday" : ISODate("1952-09-02T04:00:00Z"),
+                "favoriteMovies" : [
+                ObjectId("5ff630c414f8e589ab36f832"),
+                ObjectId("5ff62e7014f8e589ab36f82d")
+                ]
                 }
             </td>
         </tr>
@@ -127,41 +149,51 @@
             <td>JSON</td>
             <td>
                 {
-                "username": "sakiproudfoot",
-                "password": "supersecretstuffhere",
-                "email": "sakiproudfoot@gmail.com"
+                "_id" : ObjectId("5ff64a94d3e5442ec9710829"),
+                "username" : "sakiproudfoot",
+                "password" : "changedpassword",
+                "email" : "sakiproudfoot@gmail.com",
+                "birthday" : ISODate("1952-09-02T04:00:00Z"),
+                "favoriteMovies" : [
+                ObjectId("5ff630c414f8e589ab36f832"),
+                ObjectId("5ff62e7014f8e589ab36f82d")
+                ]
                 }
             </td>
             <td>JSON</td>
             <td>
                 {
-                "username": "sakiproudfoot",
-                "id": "qwer43532qwer4362"
-                "password": "supersecretstuffhere",
-                "email": "sakiproudfoot@gmail.com",
-                "favoriteMovies": "[]"
+                "_id" : ObjectId("5ff64a94d3e5442ec9710829"),
+                "username" : "sakiproudfoot",
+                "password" : "changedpassword",
+                "email" : "sakiproudfoot@gmail.com",
+                "birthday" : ISODate("1952-09-02T04:00:00Z"),
+                "favoriteMovies" : [
+                ObjectId("5ff630c414f8e589ab36f832"),
+                ObjectId("5ff62e7014f8e589ab36f82d")
+                ]
                 }
             </td>
         </tr>
         <tr>
             <td>Allow users to add a movie to their favorites list</td>
-            <td>/users/:username/movies/:title</td>
+            <td>/users/:username/movies/:MovieID</td>
             <td>POST</td>
             <td>None</td>
-            <td>/users/sakiproudfoot/movies/Day%20of%20the%20Dead</td>
+            <td>/users/sakiproudfoot/movies/5ff6305614f8e589ab36f831</td>
             <td>JSON</td>
             <td>
                 {
-                "favoriteMovies": ["Day of the Dead"]
+                "favoriteMovies": ["5ff6305614f8e589ab36f831"]
                 }
             </td>
         </tr>
         <tr>
             <td>Allow users to remove a movie from their favorites list</td>
-            <td>/users/:username/movies/:title</td>
+            <td>/users/:username/movies/:MovieID</td>
             <td>DELETE</td>
             <td>None</td>
-            <td>/users/sakiproudfoot/movies/Day%20of%20the%20Dead</td>
+            <td>/users/sakiproudfoot/movies/5ff6305614f8e589ab36f831</td>
             <td>JSON</td>
             <td>
                 {
@@ -176,8 +208,55 @@
             <td>None</td>
             <td>/users/sakiproudfoot</td>
             <td>text</td>
-            <td>"sakiproudfoot has been deregistered"</td>
+            <td>"sakiproudfoot was deleted"</td>
         </tr>
+        <tr>
+            <td>Get a list of all users</td>
+            <td>/users</td>
+            <td>GET</td>
+            <td>None</td>
+            <td>/users</td>
+            <td>JSON</td>
+            <td>
+                [
+                {
+                "favoriteMovies": [
+                "5ff2663614f8e589ab36f826",
+                "5ff269bf14f8e589ab36f827",
+                "5ff26f1c14f8e589ab36f82c"
+                ],
+                "_id": "5ff6440414f8e589ab36f834",
+                "username": "gurugary",
+                "password": "fakepassword1",
+                "email": "gurugary@gmail.com",
+                "birthday": "1985-02-19T00:00:00.000Z"
+                }, an array of these user objects ]
+
+            </td>
+        </tr>
+        <tr>
+            <td>Get a user by username</td>
+            <td>/users/:username</td>
+            <td>GET</td>
+            <td>None</td>
+            <td>/users/gurugary</td>
+            <td>JSON</td>
+            <td>
+                {
+                "favoriteMovies": [
+                "5ff2663614f8e589ab36f826",
+                "5ff269bf14f8e589ab36f827",
+                "5ff26f1c14f8e589ab36f82c"
+                ],
+                "_id": "5ff6440414f8e589ab36f834",
+                "username": "gurugary",
+                "password": "fakepassword1",
+                "email": "gurugary@gmail.com",
+                "birthday": "1985-02-19T00:00:00.000Z"
+                }
+            </td>
+        </tr>
+
     </table>
 
 </body>

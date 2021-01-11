@@ -17,6 +17,20 @@ app.use(morgan('common'));
 // static public folder
 app.use(express.static('public'));
 
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+
+app.use(bodyParser.json());
+
+// app.use(function (req, res) {
+//   res.setHeader('Content-Type', 'text/plain')
+//   res.write('you posted:\n')
+//   res.end(JSON.stringify(req.body, null, 2))
+// })
+
 // error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -93,7 +107,7 @@ app.post('/users', (req, res) => {
         Users
           .create({
             username: req.body.username,
-            password: req.body.uassword,
+            password: req.body.password,
             email: req.body.email,
             birthday: req.body.birthday
           })
@@ -167,9 +181,9 @@ app.put('/users/:username', (req, res) => {
 });
 
 // Add a movie to a user's list of favorites
-app.post('/users/:username/movies/:movieID', (req, res) => {
+app.post('/users/:username/movies/:MovieID', (req, res) => {
   Users.findOneAndUpdate({ username: req.params.username }, {
-    $push: { favoriteMovies: req.params.movieID }
+    $push: { favoriteMovies: req.params.MovieID }
   },
     { new: true }, // This line makes sure that the updated document is returned
     (err, updatedUser) => {
@@ -183,9 +197,9 @@ app.post('/users/:username/movies/:movieID', (req, res) => {
 });
 
 // Remove a movie from user's list of favorites
-app.post('/users/:username/movies/remove/:movieID', (req, res) => {
+app.post('/users/:username/movies/remove/:MovieID', (req, res) => {
   Users.findOneAndUpdate({ username: req.params.username }, {
-    $pull: { favoriteMovies: req.params.movieID }
+    $pull: { favoriteMovies: req.params.MovieID }
   },
     { new: true },
     (err, updatedUser) => {
