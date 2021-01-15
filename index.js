@@ -7,16 +7,34 @@ const Users = Models.User;
 const express = require("express"),
   morgan = require("morgan");
 
-const app = express();
+// server side validation
+const { check, validationResult } = require('express-validator');
 
-mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+// let there be light
+const app = express();
 
 // terminal logger
 app.use(morgan('common'));
 
+// cors access control 
+const cors = require('cors');
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
+      let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
+      return callback(new Error(message ), false);
+    }
+    return callback(null, true);
+  }
+}));
+
 // static public folder
 app.use(express.static('public'));
 
+// body parser
 const bodyParser = require('body-parser')
 
 app.use(bodyParser.urlencoded({
@@ -25,17 +43,19 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
+// user authentication with passport
 let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
-
-
 
 // error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
+
+// connecting app to our db using mongoose
+mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 // get all movies
 app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -85,40 +105,56 @@ app.get('/movies/directors/:name', passport.authenticate('jwt', { session: false
     });
 });
 
-//Add a user
-/* We’ll expect JSON in this format
+//add a user
+/* we’ll expect JSON in this format
 {
-  ID: Integer,
   username: String,
   password: String,
   email: String,
   birthday: Date
 }*/
-app.post('/users', (req, res) => {
-  Users.findOne({ username: req.body.username })
-    .then((user) => {
-      if (user) {
-        return res.status(400).send(req.body.username + 'already exists');
-      } else {
-        Users
-          .create({
-            username: req.body.username,
-            password: req.body.password,
-            email: req.body.email,
-            birthday: req.body.birthday
-          })
-          .then((user) => { res.status(201).json(user) })
-          .catch((error) => {
-            console.error(error);
-            res.status(500).send('Error: ' + error);
-          })
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send('Error: ' + error);
+app.post('/users',
+  [ // all the express-validator form validations
+    check('username', 'Username is required').isLength({min: 5}),
+    check('username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('password', 'Password is required').not().isEmpty(),
+    check('email', 'Email does not appear to be valid').isEmail()
+  ],  (req, res) => {
+    // check the validation object for errors
+    let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+    // takes the password the user entered and hashes it with bcrypt
+    let hashedPassword = Users.hashPassword(req.body.password);
+    Users.findOne({ username: req.body.username })
+      .then((user) => {
+        // search to see if a user with the requested username already exists
+          if (user) {
+            return res.status(400).send(req.body.username + 'already exists');
+          } else {
+            // creates a user entry in our connected db using our mongoose model
+            Users
+              .create({
+                username: req.body.username,
+                // sets hashed password
+                password: hashPassword,
+                email: req.body.email,
+                birthday: req.body.birthday
+              })
+              .then((user) => { res.status(201).json(user) })
+              .catch((error) => {
+                console.error(error);
+                res.status(500).send('Error: ' + error);
+              })
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send('Error: ' + error);
+        });
     });
-});
 
 // Get all users
 app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
