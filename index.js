@@ -126,7 +126,8 @@ app.post('/users',
 
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
-    }
+    };
+    
     // takes the password the user entered and hashes it with bcrypt
     let hashedPassword = Users.hashPassword(req.body.password);
     Users.findOne({ username: req.body.username })
@@ -199,6 +200,12 @@ app.put('/users/:username', passport.authenticate('jwt', { session: false }),
   check('password', 'Password is required').not().isEmpty(),
   check('email', 'Email does not appear to be valid').isEmail()
 ], (req, res) => {
+  let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    };
+
   let hashedPassword = Users.hashPassword(req.body.password);
   Users.findOneAndUpdate({ username: req.params.username }, {
     $set:
