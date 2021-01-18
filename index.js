@@ -55,7 +55,8 @@ app.use((err, req, res, next) => {
 });
 
 // connecting app to our db using mongoose
-mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // get all movies
 app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
