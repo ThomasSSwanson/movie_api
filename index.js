@@ -58,6 +58,10 @@ app.use((err, req, res, next) => {
 // mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
+app.get('/', (req, res) => {
+  res.send('Temp home page')
+});
+
 // get all movies
 app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
@@ -127,7 +131,7 @@ app.post('/users',
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     };
-    
+
     // takes the password the user entered and hashes it with bcrypt
     let hashedPassword = Users.hashPassword(req.body.password);
     Users.findOne({ username: req.body.username })
