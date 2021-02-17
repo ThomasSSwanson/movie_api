@@ -9,13 +9,13 @@ const passport = require('passport'),
     
   passport.use(new LocalStrategy({
     usernameField: 'username',
-    passwordField: 'password'
+    passwordField: 'password',
   }, (username, password, callback) => {
     console.log(username + ' ' + password);
     Users.findOne({ username: username}, (error, user) => {
       if (error) {
         console.log(error);
-        return callback(error)
+        return callback(error);
       }
 
       if (!user) {
@@ -35,13 +35,13 @@ const passport = require('passport'),
 
   passport.use(new JWTStrategy({
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-    secretOrKey: 'your_jwt_secret'
+    secretOrKey: 'your_jwt_secret',
   }, (jwtPayload, callback) => {
     return Users.findById(jwtPayload._id)
       .then((user) => {
         return callback(null, user);
       })
       .catch((error) => {
-        return callback(error)
+        return callback(error);
       });
   }));
