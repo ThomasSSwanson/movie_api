@@ -200,7 +200,7 @@ app.get('/users/:username', passport.authenticate('jwt', {session: false}), (req
   (required)
   birthday: Date
 }*/
-app.put('/users/:username', passport.authenticate('jwt', {session: false}),
+app.put('/users/update/:username', passport.authenticate('jwt', {session: false}),
     [ // all the express-validator form validations
       check('username', 'Username is required').isLength({min: 5}),
       check('username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
